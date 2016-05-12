@@ -37,11 +37,20 @@
     return nil;
 }
 - (UIImageView *)tp_screenShotView{
-    UIImage *screenShotImage = [self tpScreenShot];
+    UIImage *screenShotImage = [self tp_screenShotImage];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
     imageView.image = screenShotImage;
     return imageView;
 }
+- (UIImage *)tp_screenShotImage
+{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 1);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *uiImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return uiImage;
+}
+
 
 static char kTPWhenTappedBlockKey;
 - (void)tp_whenTapped:(TPWhenTappedBlock)block {
@@ -57,37 +66,6 @@ static char kTPWhenTappedBlockKey;
     if (action) {
         action();
     }
-}
-
-- (UIView *)tp_addHorizontalSeperateLine:(BOOL)left {
-    UIView *sepLine = [UIView new];
-    sepLine.backgroundColor = [UIColor tp_horizontalSepLine];
-    [self addSubview:sepLine];
-    [sepLine makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.equalTo(self);
-        make.width.equalTo(0.5);
-        if (left) {
-            make.left.equalTo(self);
-        } else {
-            make.right.equalTo(self);
-        }
-    }];
-    return sepLine;
-}
-
-- (UIView *)tp_addVerticalSeperateLine:(BOOL)top {
-    UIView *sepLine = [UIView new];
-    sepLine.backgroundColor = [UIColor tp_verticalSepLine];
-    [self addSubview:sepLine];
-    [sepLine makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        if (top) {
-            make.top.equalTo(self);
-        } else {
-            make.bottom.equalTo(self);
-        }
-    }];
-    return sepLine;
 }
 
 @end

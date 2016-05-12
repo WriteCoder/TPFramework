@@ -15,6 +15,7 @@ typedef void(^TPWhenTappedBlock)();
 - (UIViewController *)tp_getViewController;//获取当前视图所在的视图控制器
 - (UIView *)tp_getSuperViewWithClassName:(NSString *)className;//获取父视图，直到父视图是指定的类
 - (UIImageView *)tp_screenShotView;
+- (UIImage *)tp_screenShotImage;
 
 @end
 
